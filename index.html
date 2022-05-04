@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline'; font-src * data: URIs ">
+
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Color theme for statusbar -->
+    <!-- <meta name="theme-color" content="#2196f3"> -->
+    <meta name="color-scheme" content="light dark">
+
+    <!-- Your app title -->
+    <title>Supermercado Supersol</title>
+    <!-- Path to Framework7 Library CSS -->
+    <link rel="stylesheet" href="lib/framework7/framework7-bundle.min.css">
+    <!-- Path to icons -->
+    <link rel="stylesheet" href="css/icons.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/app.css">
+   <!-- <link rel="stylesheet" href="css/style.css">-->
+   <!--Logo app-->
+   <link rel="icon" href="img/logo.png" type="logo"/>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="panel panel-left panel-cover panel-init">
+
+            <div class="block">
+                <section>
+                    <div class="column">
+                        <div class="carrito">
+                            <div><h4 id="descripcion"></h4></div>
+                            <div><h4 id="cantidad"></h4></div>
+                            <div><h4 id="precUnit"></h4></div>
+                        </div>
+                    </div>
+                    <hr style="width: 85%;"> <br><br><br>
+                    <b><h4>Totales</h4></b> <br>
+                    <u>Total cantidad de artículos:</u> <b><span id="totalArt">0</span></b> <br> <br>
+                    <u>Total en pesos:</u><b>$ <span id="totalPesos">0</span></b>
+                </section>
+                <br><br><br>
+                <label class="label1">Forma de envío/retiro:</label> <br>
+                <select name="selRange" class="select" id="envio"><option value="A domicilio">A domicilio</option>
+                                                                <option value="Retiro en sucursal">Retiro en sucursal</option>
+                </select>
+        
+                <br><br><br>
+                <label class="label1">Forma de pago:</label> <br>
+                <select name="selRange" class="select" id="pago"><option value="Efectivo al recibir/retirar">Efectivo al recibir/retirar</option>
+                                                                <option value="Tarjeta de crédito/débito">Tarjeta de crédito/débito</option>
+                                                                <option value="Billetera Santa Fe">Billetera Santa Fe</option>
+                                                                <option value="Cuenta Corriente">Cuenta Corriente</option>
+                </select> <br><br><br>
+        
+                <div class="block block-strong">
+                    <button id="confirmar" class="boton col button button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+                        @click=${load} style="background-color: orange; color: yellow; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;" onclick="">
+                        <span class="preloader"></span>
+                        <span>Confirmar Pedido</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Statusbar overlay -->
+        <div class="statusbar"></div>
+    
+            <!-- Your main view, should have "view-main" class -->
+            <div class="view view-main">
+        
+                    <!-- Top Navbar -->
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner nav">
+                            <a href="/index/"><img style="width: 60px; height: 60px;" src="img/logo.png" alt="logo"></a>
+                            <div class="sucu">
+                                <u style="color: orange; font: bold; text-align: center;"><h6>Sucursal:</h6></u>
+                                <select id="suc" name="select" class="selectsucursales">
+                                    <option id="corr" style="text-align: center;" value="Correa">Correa</option>
+                                    <option id="cdg" style="text-align: center;" value="Cañada de Gómez">Cañada de Gómez</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Toolbar -->
+                    <div class="toolbar toolbar-bottom">
+                        <!-- Toolbar links -->
+                           <div class="menu">
+                                <a href="/index/"><img src="img/icons/home.png" alt=""></a>
+                                <a href="#" data-panel=".panel-left" class="panel-open">
+                                    <img src="img/icons/carritocompras.png" alt=""></a>
+                                <a href="/busqueda/"><img src="img/icons/buscar.png" alt=""></a>
+                                <a href="/categorias/"><img src="img/icons/opciones.png" alt=""></a>
+                                <a href="/cuenta/"><img src="img/icons/cuenta.png" alt=""></a>
+                            </div>
+                    </div>
+            
+                    <!-- Initial Page, "data-name" contains page name -->
+                    <div data-name="index" class="page">
+                        <!-- Scrollable page content -->
+                        <div class="page-content">
+                            <div class="block">
+                                <!-- SLIDER SWIPER COMENTADO PARA PROBAR OTRO
+                                <div class="beneficios">
+                                    <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="50"
+                                        class="swiper-container swiper-init demo-swiper">
+                                        <div class="swiper-pagination"></div>
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide"><img src="img/banner1.png" alt=""></div>
+                                                <div class="swiper-slide"><img src="img/banner2.png" alt=""></div>
+                                                <div class="swiper-slide"><img src="img/banner3.png" alt=""></div>
+                                                <div class="swiper-slide"><img src="img/bsf.png" alt=""></div>
+                                                <div class="swiper-slide"><img src="img/horarios.png" alt=""></div>
+                                                <div class="swiper-slide"><img src="img/tarjetas1.png" alt=""></div>
+                                                <div class="swiper-slide"><img src="img/tarjetas2.png" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                                <div class="container-all">
+
+                                    <input type="radio" id="1" name="image-slide" hidden/>
+                                    <input type="radio" id="2" name="image-slide" hidden/>
+                                    <input type="radio" id="3" name="image-slide" hidden/>
+                                    <input type="radio" id="4" name="image-slide" hidden/>
+                                    <input type="radio" id="5" name="image-slide" hidden/>
+                                    <input type="radio" id="6" name="image-slide" hidden/>
+                                    <input type="radio" id="7" name="image-slide" hidden/>
+                            
+                                    <div class="slide">
+                            
+                                        <div class="item-slide">
+                                            <img src="img/banner1.png">
+                                        </div>
+                            
+                                        <div class="item-slide">
+                                            <img src="img/banner2.png">
+                                        </div>
+                            
+                                        <div class="item-slide">
+                                            <img src="img/banner3.png">
+                                        </div>
+
+                                        <div class="item-slide">
+                                            <img src="img/bsf.png">
+                                        </div>
+
+                                        <div class="item-slide">
+                                            <img src="img/horarios.png">
+                                        </div>
+
+                                        <div class="item-slide">
+                                            <img src="img/tarjetas1.png">
+                                        </div>
+
+                                        <div class="item-slide">
+                                            <img src="img/tarjetas2.png">
+                                        </div>
+                            
+                                    </div>
+                            
+                                    <div class="pagination">
+                                       
+                                        <label class="pagination-item" for="1">
+                                            <img src="img/banner1.png">
+                                        </label>
+                                        
+                                        <label class="pagination-item" for="2">
+                                            <img src="img/banner2.png">
+                                        </label>
+                                        
+                                        <label class="pagination-item" for="3">
+                                            <img src="img/banner3.png">
+                                        </label>
+
+                                        <label class="pagination-item" for="4">
+                                            <img src="img/bsf.png">
+                                        </label>
+                                        
+                                        <label class="pagination-item" for="5">
+                                            <img src="img/horarios.png">
+                                        </label>
+                                        
+                                        <label class="pagination-item" for="6">
+                                            <img src="img/tarjetas1.png">
+                                        </label>
+
+                                        <label class="pagination-item" for="7">
+                                            <img src="img/tarjetas2.png">
+                                        </label>
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="titulo">
+                                    <u><h2 class="tittle">OFERTAS SEMANALES</h2></u>
+                                </div>
+                                <div id="ofertas" class="row"> </div>
+                                
+                                <div class="ofertas row">
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta1.jpg" alt="">
+                                        <span>Yerba Andresito x500 grs</span> <br>
+                                        <span>$179,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta2.jpg" alt="">
+                                        <span>Flan Noel (Vainilla y Dulce de Leche)</span> <br>
+                                        <span>$25,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta3.jpg" alt="">
+                                        <span>Limpiador Poett x4 lts.</span> <br>
+                                        <span>$439,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta4.jpg" alt="">
+                                        <span>Jabon Rexona</span> <br>
+                                        <span>$49,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta5.jpg" alt="">
+                                        <span>Shampoo y Acond. DOVE</span> <br>
+                                        <span>$169,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta6.jpg" alt="">
+                                        <span>Dentifrico Colgate Original x70grs</span> <br>
+                                        <span>$92,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta7.jpg" alt="">
+                                        <span>Harina Pureza Leudante</span> <br>
+                                        <span>$73,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta8.jpg" alt="">
+                                        <span>Arroz Luchador x500 grs</span> <br>
+                                        <span>$72,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta9.jpg" alt="">
+                                        <span>Fideos Knorr (todos) x500 grs</span> <br>
+                                        <span>$65,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <img src="img/ofertas/oferta10.jpg" alt="">
+                                        <span>Puré de Tomate Cica x520 grs</span> <br>
+                                        <span>$62,90</span>
+                                        <div class="block-strong">
+                                            <button class="boton col button button-fill" id="agregar1">Agregar a carrito</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div> 
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-firestore.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script> -->
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4i0KsMndodJ4N2_7vQFTkuhLP2NpKcf0",
+            authDomain: "app-supermercados-732ec.firebaseapp.com",
+            projectId: "app-supermercados-732ec",
+            storageBucket: "app-supermercados-732ec.appspot.com",
+            messagingSenderId: "889079623842",
+            appId: "1:889079623842:web:d8e229be6234026ac2e7fb"
+        };
+              // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+      </script>
+  
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/framework7/framework7-bundle.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+</body>
+
+</html>
+
+<!--
+<div class="row margin-top">
+    <div class="col">
+      <div class="stepper stepper-small stepper-fill stepper-round stepper-init color-orange">
+            <div class="stepper-button-minus"></div>
+                <div class="stepper-input-wrap">
+                    <input type="text" value="0" min="0" max="100" step="1" readonly />
+                </div>
+            <div class="stepper-button-plus"></div>
+        </div>
+    </div>
+</div>
+-->

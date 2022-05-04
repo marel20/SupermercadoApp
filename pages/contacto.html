@@ -1,0 +1,79 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
+<div class="page" data-name="contacto">
+    <div class="page-content">
+        <div class="navbar">
+          <div class="navbar-inner sliding">
+              <div class="left">
+                  <a href="#" class="link back">
+                  <i class="icon icon-back"></i>
+                  <span class="ios-only">Atrás</span>
+                  </a>
+              </div>
+          </div>
+        </div>
+        <div class="list no-hairlines-md">
+            <ul>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-media">
+                  <i class="icon demo-list-icon"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">Nombre y apellido</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="name" id="nomAp" placeholder="Tu nombre y apellido" />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-media">
+                  <i class="icon demo-list-icon"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">E-mail</div>
+                  <div class="item-input-wrap">
+                    <input type="email" name="email" id="mailCons" placeholder="Tu e-mail" />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-media">
+                  <i class="icon demo-list-icon"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">Teléfono</div>
+                  <div class="item-input-wrap">
+                    <input type="tel" name="telefono" id="tel" placeholder="Tu número" />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-media">
+                  <i class="icon demo-list-icon"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">Dejenos un mensaje</div>
+                  <div class="item-input-wrap">
+                    <input type="text" id="consulta" size="254" placeholder="Mensaje">
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="block block-strong">
+            <a href="#"><button id="consultar" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+              @click=${load} style="background-color: orange; color: yellow;" onclick="getData()">
+              <span class="preloader"></span>
+              <span>Enviar consulta</span>
+            </button></a>
+          </div>
+        <div class="row">
+            <a href="https://www.facebook.com/supermercadosupersol" target="_blank" style="margin: 1%;"><img src="img/icons/facebook.png" alt="facebook"></a>
+            <a href="https://www.instagram.com/supermercadosupersol/" target="_blank" style="margin: 1%;"><img src="img/icons/instagram.png" alt="instagram"></a>
+            <a href="https://wa.me/5493471570667" target="_blank" style="margin: 1%;"><img src="img/icons/whatsapp.png" alt="whatsapp"></a>
+        </div>
+    </div>
+</div>

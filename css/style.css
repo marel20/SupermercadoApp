@@ -1,0 +1,43 @@
+* { margin: 0; padding: 0;}
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.selectsucursales{
+    padding: 0.5%;
+    text-align: center;
+    font: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: orange;
+}
+.menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1% 0;
+}
+.ofertas > .col-50 > img {width: 70%; height: 70%; margin: 3% 15%;}
+.titulo {text-align: center;}
+
+  .demo-swiper.demo-swiper-auto .swiper-slide {
+    width: 85%;
+  }
+
+  .demo-swiper.demo-swiper-auto .swiper-slide:nth-child(2n) {
+    width: 70%;
+  }
+
+  .demo-swiper.demo-swiper-auto .swiper-slide:nth-child(3n) {
+    width: 30%;
+  }
+#agregar1{
+    margin: 2% 40%;
+    padding: 1%;
+    border-radius: 10px;
+    color: yellow;
+    font: bold;
+    background-color: orange;
+}

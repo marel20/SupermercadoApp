@@ -1,0 +1,51 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
+<div class="page" data-name="resumen">
+    <div class="page-content">
+        <div class="navbar">
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                    <i class="icon icon-back"></i>
+                    <span class="ios-only">Atrás</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+            <div class="select2">
+                <u><h2>Resumen de Pedido</h2></u>
+            </div>
+            <div class="block">
+                <section>
+                    
+                    <div id="resumenPedido" class="column">
+                        
+
+                        
+                    </div>
+
+
+                    <hr style="width: 85%;">
+                    <b><h3>Totales</h3></b> <br>
+                    <b>Total cantidad de artículos: <span id="RtotalArt">0</span></b> <br> <br>
+                    <b>Total en pesos: $ <span id="RtotalPesos">0</span></b>
+                </section>
+                
+                    <u><label class="label1">Forma de envío/retiro:</label></u> 
+                    <b><span id="envioR"></span></b> <br><br>
+
+                    <u><label class="label1">Forma de pago:</label></u> 
+                    <b><span id="pagoR"></span></b> <br><br><br>
+                <div class="select2">
+                    <h5>En caso de faltante de algun producto, se descontará del resumen.</h5>
+                    <h4>Gracias por su compra, Supermercado Supersol.</h4>
+                </div>
+                <div class="block block-strong">
+                    <button id="volver" class="boton col button button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+                        @click=${load} style="background-color: orange; color: yellow; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                        <span class="preloader"></span>
+                        <span>Volver a Inicio</span>
+                    </button>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
+<div class="page" data-name="iniciar">
+  <div class="page-content">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+            <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Atrás</span>
+            </a>
+        </div>
+      </div>
+    </div>
+    <div class=" login-screen-content block">
+      <div class="login-screen-title"><img style="width: 90px; height: 90px;" src="img/logo.png" alt="logo"></div>
+      <form>
+        <div class="list">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Usuario</div>
+                <div class="item-input-wrap">
+                  <input type="text" id="mailLog" name="username" placeholder="Tu Usuario" />
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Contraseña</div>
+                <div class="item-input-wrap">
+                  <input type="password" id="passwLog" name="password" placeholder="Tu Contraseña" />
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </form> <br>
+        <h4 id="msgErrorLogin" class="error select2"></h4>
+        
+        <div class="block block-strong">
+          <button id="inSes" class="boton col button button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+          @click=${load} style="background-color: orange; color: yellow; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+          <span class="preloader"></span>
+          <span>Iniciar Sesión</span>
+          </button>
+        </div>
+        <div class="block-footer">
+          <p>Si aun no estas registrado, <a style="color: orange; font-family: Verdana, Geneva, Tahoma, sans-serif;" href="/registro/">hacé click acá</a></p>
+        </div>
+    </div>
+  </div>
+</div>
+                
+            
+              <!--    
+                  <div class="list">
+                    <ul>
+                      <li><button id="inSes" class="boton col button button-fill">Iniciar Sesión</button></li>
+                    </ul>
+                    <div class="block-footer">
+                      <p>Si aun no estas registrado, <a style="color: orange; font-family: Verdana, Geneva, Tahoma, sans-serif;" href="/registro/">hacé click acá</a></p>
+                    </div>
+                  </div>-->

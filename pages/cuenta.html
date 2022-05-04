@@ -1,0 +1,43 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
+<div class="page" data-name="cuenta">
+  <div class="page-content">
+      <div class="navbar">
+          <div class="navbar-inner sliding">
+            <div class="left">
+                <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="ios-only">Atrás</span>
+                </a>
+            </div>
+          </div>
+      </div>
+      <div class="list links-list">
+          <ul>
+            <div id="visualizar" class="visible"><li><a href="/mispedidos/">Mi Ultimo Pedido</a></li></div>
+            <div id="ocultar" class="oculto"></div>
+            <li><a href="/sucursales/">Sucursales</a></li>
+            <li><a href="/contacto/">Contacto</a></li>
+          </ul>
+      </div>
+
+
+        <div id="ocultar" class="visible block block-strong">
+           <a href="/iniciar/"><button id="iniciar" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+             @click=${load} style="background-color: orange; color: yellow; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+             <span class="preloader"></span>
+             <span>Iniciar Sesión</span>
+           </button></a>
+        </div>
+      
+
+        <div id="visualizar" class="oculto block block-strong">
+          <a href="#"><button id="cerrar" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+            @click=${load} style="background-color: orange; color: yellow; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+            <span class="preloader"></span>
+            <span>Cerrar Sesión</span>
+          </button></a>
+        </div>
+
+        
+  </div>
+</div>

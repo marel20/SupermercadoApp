@@ -86,9 +86,9 @@
   --f7-theme-color-tint: #ff9e29;
 }
 
-/*#app{
+#app{
   height: 90vh;
-}*/
+}
 
 * {
 	font-family: 'Poppins', Arial, sans-serif;
